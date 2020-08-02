@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="horizontal_margin">16dp</dimen>
+    <dimen name="large_margin">20dp</dimen>
+    <dimen name="material_emphasis_disabled">0.38</dimen>
+    <dimen name="material_emphasis_high_type">0.87</dimen>
+    <dimen name="material_emphasis_medium">0.6</dimen>
+    <dimen name="text_header">18sp</dimen>
+    <dimen name="text_large">16sp</dimen>
+    <dimen name="text_normal">14sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="toolbar_header">22sp</dimen>
+    <dimen name="vertical_margin">16dp</dimen>
+</resources>

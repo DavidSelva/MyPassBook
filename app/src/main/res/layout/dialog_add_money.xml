@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/horizontal_margin"
+    android:layout_marginEnd="@dimen/horizontal_margin"
+    android:background="@color/colorWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtDate"
+            style="@style/PrimaryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="@string/date"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/edtParticulars"
+            style="@style/BaseTheme.PrimaryEditTextNormal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:hint="@string/particulars"
+            android:inputType="textCapSentences"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/edtAmount"
+            style="@style/BaseTheme.PrimaryEditTextNormal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:hint="@string/enter_amount"
+            android:inputType="numberDecimal"
+            android:padding="10dp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/btnCredit"
+                style="@style/PrimaryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/credit" />
+
+            <RadioButton
+                android:id="@+id/btnDebit"
+                style="@style/PrimaryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/horizontal_margin"
+                android:text="@string/debit" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnAdd"
+            style="@style/PrimaryButtonNormal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/add" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

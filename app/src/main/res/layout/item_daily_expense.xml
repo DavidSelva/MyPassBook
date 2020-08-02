@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/itemLay"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <CheckBox
+            android:id="@+id/btnCheck"
+            style="@style/PrimaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/edtExpense"
+            style="@style/BaseTheme.PrimaryEditTextNormal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:gravity="start"
+            android:hint="@string/particulars"
+            android:inputType="textCapSentences"
+            android:padding="10dp"
+            android:text="0" />
+
+        <EditText
+            android:id="@+id/edtCost"
+            style="@style/BaseTheme.PrimaryEditTextNormal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:hint="@string/enter_amount"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:text="0" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
