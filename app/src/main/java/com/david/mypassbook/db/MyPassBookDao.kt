@@ -28,10 +28,10 @@ interface MyPassBookDao {
     fun getTotalByMonth(str: String?): MoneyModel?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertDailyExpense(dailyExpenseModel: DailyExpenseModel?)
+    fun insertDailyExpense(dailyExpenseModel: DailyExpenseModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMoney(moneyModel: MoneyModel?)
+    fun insertTransaction(moneyModel: MoneyModel?)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSalary(salaryModel: SalaryModel?)

@@ -2,9 +2,6 @@ package com.david.mypassbook.utils
 
 import android.content.Context
 import android.widget.Toast
-import kotlin.jvm.internal.Intrinsics
-
-
 
 
 class AppUtils {
@@ -16,7 +13,7 @@ class AppUtils {
     companion object {
         private val TAG: String = AppUtils::class.java.simpleName
         var contex: Context? = null
-        var instance: AppUtils? = null
+        lateinit var instance: AppUtils
 
         @Synchronized
         private fun createInstance(mContext: Context) {
@@ -26,7 +23,7 @@ class AppUtils {
             }
         }
 
-        fun getInstance(context: Context): AppUtils? {
+        fun getInstance(context: Context): AppUtils {
             createInstance(context)
             return instance
         }
