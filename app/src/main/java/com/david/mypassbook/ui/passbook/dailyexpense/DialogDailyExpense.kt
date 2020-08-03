@@ -1,6 +1,5 @@
 package com.david.mypassbook.ui.passbook.dailyexpense
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
@@ -14,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.david.mypassbook.R
 import com.david.mypassbook.databinding.DialogDailyExpenseBinding
 import com.david.mypassbook.db.DailyExpenseModel
-import com.david.mypassbook.db.MyPassBookDao
-import com.david.mypassbook.ui.passbook.MoneyViewModel
+import com.david.mypassbook.ui.passbook.MainActivity
+import com.david.mypassbook.ui.passbook.PassBookViewModel
 import com.david.mypassbook.utils.AppUtils
 import com.david.mypassbook.utils.Constants
 import java.util.concurrent.Executors
@@ -26,16 +25,11 @@ class DialogDailyExpense : DialogFragment() {
     val TAG = DialogDailyExpense::javaClass.name
     lateinit var binding: DialogDailyExpenseBinding
     private val dailyExpenseModel: DailyExpenseModel? = null
-    lateinit var dailyViewModel: MoneyViewModel
+    lateinit var dailyViewModel: PassBookViewModel
     lateinit var expenseAdapter: EditExpenseAdapter
     private val expenseList: List<DailyExpenseModel> = ArrayList()
     lateinit var mContext: Context
     lateinit var mFrom: String
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val onCreateDialog = super.onCreateDialog(savedInstanceState)
-        return onCreateDialog;
-    }
 
     override fun onStart() {
         super.onStart()
@@ -57,9 +51,11 @@ class DialogDailyExpense : DialogFragment() {
         val inflate =
             DialogDailyExpenseBinding.inflate(inflater, container, false)
         this.binding = inflate;
-        val root = inflate.root
-        val itemView: View = root
-        dailyViewModel = ViewModelProvider(this).get(MoneyViewModel::class.java)
+        return inflate.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        dailyViewModel = ViewModelProvider(this).get(PassBookViewModel::class.java)
         setAdapter()
         dailyViewModel.dailyExpenses.observe(
             requireActivity(),
@@ -91,11 +87,15 @@ class DialogDailyExpense : DialogFragment() {
                     )
                 }
             } else {
-                if (expenseAdapter.)
+                if (expenseAdapter.getCheckedData().isNotEmpty()) {
+                    if (activity is MainActivity) {
+                        val tempActivity: MainActivity = activity as MainActivity;
+                        tempActivity.onDailyExpenseAdded(expenseAdapter.getCheckedData())
+                    }
+                }
+                dismissAllowingStateLoss()
             }
         })
-
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     private fun setAdapter() {

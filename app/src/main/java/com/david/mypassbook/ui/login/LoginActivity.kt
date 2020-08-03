@@ -36,7 +36,7 @@ class LoginActivity : BaseActivity() {
                 when {
                     TextUtils.isEmpty(loginBinding.edtPin.text) -> {
                         AppUtils.getInstance(mContext)
-                            ?.makeToast(getString(R.string.enter_pin_number));
+                            .makeToast(getString(R.string.enter_pin_number));
                     }
                     loginBinding.edtPin.toString() != PrefUtils.readString(PrefUtils.KEY_PIN) -> {
                         AppUtils.getInstance(mContext)

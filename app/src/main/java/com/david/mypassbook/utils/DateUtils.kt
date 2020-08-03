@@ -6,29 +6,13 @@ import java.util.*
 
 public final class DateUtils {
 
-   public companion object {
+    public companion object {
         private lateinit var mContext: Context;
-        private val FORMAT_MONTH = "M";
-        private val FORMAT_STRING_MONTH = "MMM";
+        const val FORMAT_MONTH = "MM";
+        const val FORMAT_STRING_MONTH = "MMM";
 
         public fun init(context: Context) {
             mContext = context
-        }
-
-        fun getMContext(): Context {
-            return mContext
-        }
-
-        fun setMContext(context: Context) {
-            mContext = context
-        }
-
-        fun getFORMAT_MONTH(): String {
-            return FORMAT_MONTH
-        }
-
-        fun getFORMAT_STRING_MONTH(): String {
-            return FORMAT_STRING_MONTH
         }
 
         fun getCurrentDateTime(): String {
@@ -42,13 +26,13 @@ public final class DateUtils {
         }
 
         fun getCurrentMonth(): String {
-            val format: String = SimpleDateFormat(getFORMAT_MONTH(), Locale.ENGLISH).format(Date())
+            val format: String = SimpleDateFormat(FORMAT_MONTH, Locale.ENGLISH).format(Date())
             return format
         }
 
         fun getCurrentMonthString(): String {
             val format: String =
-                SimpleDateFormat(getFORMAT_STRING_MONTH(), Locale.ENGLISH).format(Date())
+                SimpleDateFormat(FORMAT_STRING_MONTH, Locale.ENGLISH).format(Date())
             return format
         }
 
@@ -62,5 +46,5 @@ public final class DateUtils {
             return format
         }
 
-   }
+    }
 }

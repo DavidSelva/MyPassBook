@@ -1,8 +1,9 @@
 package com.david.mypassbook.db
 
 import android.content.Context
-import androidx.room.*
-import androidx.sqlite.db.SupportSQLiteOpenHelper
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
 
 @Database(
     entities = [MoneyModel::class, SalaryModel::class, DailyExpenseModel::class],
@@ -33,16 +34,4 @@ abstract class MyPassBookDatabase : RoomDatabase() {
     }
 
     abstract fun myPassBookDao(): MyPassBookDao
-
-    override fun createOpenHelper(config: DatabaseConfiguration?): SupportSQLiteOpenHelper {
-        TODO("Not yet implemented")
-    }
-
-    override fun createInvalidationTracker(): InvalidationTracker {
-        TODO("Not yet implemented")
-    }
-
-    override fun clearAllTables() {
-        TODO("Not yet implemented")
-    }
 }

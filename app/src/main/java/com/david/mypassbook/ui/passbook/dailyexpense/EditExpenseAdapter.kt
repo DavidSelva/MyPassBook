@@ -8,46 +8,35 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.david.mypassbook.R
 import com.david.mypassbook.databinding.ItemDailyExpenseBinding
 import com.david.mypassbook.db.DailyExpenseModel
 
 
 class EditExpenseAdapter internal constructor(
     context: Context,
-    dailyList: List<DailyExpenseModel>,
-    from: String
+    dailyList: List<DailyExpenseModel>
 ) :
     RecyclerView.Adapter<ViewHolder>() {
 
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private val VIEWTYPE_HEADER = 0
-    private val VIEWTYPE_DATA = 1
     private var expenseList: List<DailyExpenseModel> = dailyList
     private var tempList: MutableList<DailyExpenseModel> = ArrayList()
     private val mContext: Context = context
 
-    companion object {
-        public lateinit var binding: ItemDailyExpenseBinding
-
-        public fun MyViewHolder(binding: ItemDailyExpenseBinding {
-            this.binding = binding;
-        }
-
+    fun getCheckedData(): List<DailyExpenseModel> {
+        return tempList
     }
-
     fun setData(model: List<DailyExpenseModel>) {
         expenseList = model
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return MyViewHolder(
-            ItemDailyExpenseBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+
+        var view = LayoutInflater.from(parent.context).inflate(
+            R.layout.item_daily_expense, parent, false
         )
+        return MyViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -77,6 +66,6 @@ class EditExpenseAdapter internal constructor(
     }
 
     inner class MyViewHolder(itemView: View) : ViewHolder(itemView) {
-        val viewBinding = binding
+        val viewBinding = ItemDailyExpenseBinding.bind(itemView)
     }
 }

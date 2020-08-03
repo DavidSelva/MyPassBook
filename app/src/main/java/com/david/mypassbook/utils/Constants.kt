@@ -5,6 +5,7 @@ class Constants {
 
     companion object {
         const val STORAGE_REQUEST_CODE = 100
+        const val ADD_TRANX_REQ_CODE = 600
         const val TAG_ADD = "add"
         const val TAG_EDIT = "edit"
         const val TAG_FILE_PATH = "file_path"

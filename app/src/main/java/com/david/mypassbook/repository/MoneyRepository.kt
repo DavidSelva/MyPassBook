@@ -1,12 +1,11 @@
 package com.david.mypassbook.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
-import com.david.mypassbook.db.DailyExpenseModel
-import com.david.mypassbook.db.MoneyModel
-import com.david.mypassbook.db.MyPassBookDao
+import com.david.mypassbook.db.*
 
 
-class MoneyRepository(private val dao: MyPassBookDao) {
+class MoneyRepository(private val dao: MyPassBookDao, private val mContext: Context) {
     private var TAG: String = MoneyRepository::javaClass.name
     private var listLiveData: LiveData<List<MoneyModel>> = dao.getAllData()
     private var myTranxDao: MyPassBookDao = dao
@@ -16,8 +15,8 @@ class MoneyRepository(private val dao: MyPassBookDao) {
         return myTranxDao.getAllData()
     }
 
-    fun getDataByMonth(dateQuery: String): LiveData<List<MoneyModel>> {
-        val dataByMonth: LiveData<List<MoneyModel>> = myTranxDao.getDataByMonth(dateQuery)
+    fun getTransactionsByMonth(dateQuery: String): LiveData<List<MoneyModel>> {
+        val dataByMonth: LiveData<List<MoneyModel>> = myTranxDao.getTransactionsByMonth(dateQuery)
         listLiveData = dataByMonth
         return dataByMonth
     }
@@ -31,7 +30,35 @@ class MoneyRepository(private val dao: MyPassBookDao) {
         dao.insertDailyExpense(dailyExpense)
     }
 
-    fun getAllDailyExpenses():LiveData<List<DailyExpenseModel>> {
+    fun getAllDailyExpenses(): LiveData<List<DailyExpenseModel>> {
         return myTranxDao.getDailyExpenses()
+    }
+
+    fun getFirstTransaction(): MoneyModel {
+        return myTranxDao.getFirstTransaction()
+    }
+
+    fun getLastTransaction(): MoneyModel {
+        return myTranxDao.getLastTransaction()
+    }
+
+    fun getTotalByMonth(currentMonth: String): MoneyModel {
+        return myTranxDao.getTotalByMonth(currentMonth)
+    }
+
+    fun getCurrentSalary(): SalaryModel {
+        return myTranxDao.getCurrentSalary()
+    }
+
+    fun insertSalary(salaryModel: SalaryModel) {
+        myTranxDao.insertSalary(salaryModel)
+    }
+
+    fun getTransactionCount(str: String):Long {
+        return myTranxDao.getTransactionCount(str)
+    }
+
+    fun clearAllTables() {
+        MyPassBookDatabase.getDatabase(mContext)
     }
 }

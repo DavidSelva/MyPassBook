@@ -13,19 +13,25 @@ interface MyPassBookDao {
     fun getAllData(): LiveData<List<MoneyModel>>
 
     @Query("SELECT * from MONEY_TABLE WHERE month = :str ORDER BY _id ASC")
-    fun getDataByMonth(str: String): LiveData<List<MoneyModel>>
+    fun getTransactionsByMonth(str: String): LiveData<List<MoneyModel>>
 
     @Query("SELECT * from SALARY_TABLE ORDER BY month DESC LIMIT 1")
-    fun getCurrentSalary(): List<SalaryModel>
+    fun getCurrentSalary(): SalaryModel
 
     @Query("SELECT * FROM DAILY_EXPENSE_TABLE")
     fun getDailyExpenses(): LiveData<List<DailyExpenseModel>>
 
     @Query("SELECT COUNT(*) FROM MONEY_TABLE WHERE month = :str")
-    fun getDataCount(str: String?): Long
+    fun getTransactionCount(str: String): Long
 
     @Query("SELECT * FROM MONEY_TABLE WHERE month = :str ORDER BY _id DESC LIMIT 1")
-    fun getTotalByMonth(str: String?): MoneyModel?
+    fun getTotalByMonth(str: String): MoneyModel
+
+    @Query("SELECT * FROM MONEY_TABLE ORDER BY _id ASC LIMIT 1")
+    fun getFirstTransaction(): MoneyModel
+
+    @Query("SELECT * FROM MONEY_TABLE ORDER BY _id DESC LIMIT 1")
+    fun getLastTransaction(): MoneyModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertDailyExpense(dailyExpenseModel: DailyExpenseModel)
