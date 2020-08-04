@@ -5,60 +5,59 @@ import androidx.lifecycle.LiveData
 import com.david.mypassbook.db.*
 
 
-class MoneyRepository(private val dao: MyPassBookDao, private val mContext: Context) {
+class MoneyRepository(private val passBookDao: MyPassBookDao, private val mContext: Context) {
     private var TAG: String = MoneyRepository::javaClass.name
-    private var listLiveData: LiveData<List<MoneyModel>> = dao.getAllData()
-    private var myTranxDao: MyPassBookDao = dao
+    lateinit var listLiveData: LiveData<List<MoneyModel>>
 
     /** Transaction Repository*/
     fun getAllData(): LiveData<List<MoneyModel>> {
-        return myTranxDao.getAllData()
+        return passBookDao.getAllData()
     }
 
     fun getTransactionsByMonth(dateQuery: String): LiveData<List<MoneyModel>> {
-        val dataByMonth: LiveData<List<MoneyModel>> = myTranxDao.getTransactionsByMonth(dateQuery)
+        val dataByMonth: LiveData<List<MoneyModel>> = passBookDao.getTransactionsByMonth(dateQuery)
         listLiveData = dataByMonth
-        return dataByMonth
+        return listLiveData
     }
 
     fun insertTransaction(money: MoneyModel) {
-        dao.insertTransaction(money)
+        passBookDao.insertTransaction(money)
     }
 
     /** Daily Expense Repository*/
     fun insertDailyExpense(dailyExpense: DailyExpenseModel) {
-        dao.insertDailyExpense(dailyExpense)
+        passBookDao.insertDailyExpense(dailyExpense)
     }
 
     fun getAllDailyExpenses(): LiveData<List<DailyExpenseModel>> {
-        return myTranxDao.getDailyExpenses()
+        return passBookDao.getDailyExpenses()
     }
 
     fun getFirstTransaction(): MoneyModel {
-        return myTranxDao.getFirstTransaction()
+        return passBookDao.getFirstTransaction()
     }
 
     fun getLastTransaction(): MoneyModel {
-        return myTranxDao.getLastTransaction()
+        return passBookDao.getLastTransaction()
     }
 
     fun getTotalByMonth(currentMonth: String): MoneyModel {
-        return myTranxDao.getTotalByMonth(currentMonth)
+        return passBookDao.getTotalByMonth(currentMonth)
     }
 
     fun getCurrentSalary(): SalaryModel {
-        return myTranxDao.getCurrentSalary()
+        return passBookDao.getCurrentSalary()
     }
 
     fun insertSalary(salaryModel: SalaryModel) {
-        myTranxDao.insertSalary(salaryModel)
+        passBookDao.insertSalary(salaryModel)
     }
 
-    fun getTransactionCount(str: String):Long {
-        return myTranxDao.getTransactionCount(str)
+    fun getTransactionCount(str: String): Long {
+        return passBookDao.getTransactionCount(str)
     }
 
     fun clearAllTables() {
-        MyPassBookDatabase.getDatabase(mContext)
+        MyPassBookDatabase.getDatabase(mContext).clearAllTables()
     }
 }

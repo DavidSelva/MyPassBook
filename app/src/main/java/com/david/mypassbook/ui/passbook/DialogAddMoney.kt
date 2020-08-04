@@ -82,16 +82,23 @@ class DialogAddMoney : DialogFragment() {
                 }
                 Executors.newSingleThreadExecutor().execute(Runnable {
                     val lastData = passbookDao.getLastTransaction()
-                    if (debit > 0 && lastData.total <= 0) {
+                    if (!isCredit && lastData == null) {
                         requireActivity().runOnUiThread(Runnable {
                             AppUtils.getInstance(mContext)
                                 .makeToast(getString(R.string.insufficient_funds_to_debit))
                         })
-                    } else if (debit > 0 && lastData.total < debit) {
-                        requireActivity().runOnUiThread(Runnable {
-                            AppUtils.getInstance(mContext)
-                                .makeToast(getString(R.string.insufficient_funds_to_debit))
-                        })
+                    } else if (!isCredit) {
+                        if (debit > 0 && lastData.total <= 0) {
+                            requireActivity().runOnUiThread(Runnable {
+                                AppUtils.getInstance(mContext)
+                                    .makeToast(getString(R.string.insufficient_funds_to_debit))
+                            })
+                        } else if (debit > 0 && lastData.total < debit) {
+                            requireActivity().runOnUiThread(Runnable {
+                                AppUtils.getInstance(mContext)
+                                    .makeToast(getString(R.string.insufficient_funds_to_debit))
+                            })
+                        }
                     } else {
                         val moneyModel = MoneyModel()
                         moneyModel.setParticular(particulars)

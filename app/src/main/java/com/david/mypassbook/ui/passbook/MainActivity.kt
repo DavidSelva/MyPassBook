@@ -38,6 +38,7 @@ import com.david.mypassbook.utils.DateUtils
 import com.david.mypassbook.utils.StorageUtils
 import com.github.dewinjm.monthyearpicker.MonthYearPickerDialog
 import com.github.dewinjm.monthyearpicker.MonthYearPickerDialogFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -76,10 +77,11 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
         displayWidth = displayMetrics.widthPixels
         displayHeight = displayMetrics.heightPixels
         setAdapter()
-        passbookViewModel = ViewModelProvider(this).get(PassBookViewModel::class.java)
-        passbookViewModel.allTransactions.observe(this, androidx.lifecycle.Observer { dailyList ->
-            dailyList.let { tranxAdapter.setData(dailyList) }
-        })
+        passbookViewModel =
+            ViewModelProvider(this@MainActivity, defaultViewModelProviderFactory).get(
+                PassBookViewModel::class.java
+            )
+        getTransactionsByMonth(DateUtils.getCurrentMonth());
 
 //        initDefaultCalendar()
         initMonthAndYearCalendar()
@@ -97,9 +99,19 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
         })
     }
 
+    fun getTransactionsByMonth(month: String) {
+        passbookViewModel.getTransactionsByMonth(month)
+            .observe(this, androidx.lifecycle.Observer { dailyList ->
+                if (dailyList != null) {
+                    tranxAdapter.setData(dailyList)
+                }
+            })
+    }
+
     private fun setAdapter() {
         tranxAdapter = TranxAdapter(this, dailyList)
         mainBinding.recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = tranxAdapter
         tranxAdapter.notifyDataSetChanged()
     }
 
@@ -262,7 +274,7 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
 
     fun onDailyExpenseAdded(expenseList: List<DailyExpenseModel>) {
         for (dailyExpenseModel in expenseList) {
-            val value: MoneyModel = passbookViewModel.getTotalByMonth(DateUtils.getCurrentMonth())
+            val value: MoneyModel = passbookViewModel.getLastTransaction()
             if (value == null) {
                 Executors.newSingleThreadExecutor().execute(
                     Runnable {
@@ -270,9 +282,11 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
                             .makeToast(getString(R.string.insufficient_funds_to_debit))
                     }
                 )
+                break
             } else if (value.total <= 0) {
                 AppUtils.getInstance(mContext)
                     .makeToast(getString(R.string.insufficient_funds_to_debit))
+                break
             } else {
                 var total: Double
                 val debit: Double = dailyExpenseModel.getCost()

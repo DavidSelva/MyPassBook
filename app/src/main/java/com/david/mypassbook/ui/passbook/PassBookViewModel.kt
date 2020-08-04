@@ -1,9 +1,8 @@
 package com.david.mypassbook.ui.passbook
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import com.david.mypassbook.db.*
 import com.david.mypassbook.repository.MoneyRepository
 import kotlinx.coroutines.launch
@@ -14,13 +13,13 @@ public class PassBookViewModel(application: Application) : AndroidViewModel(appl
     private val moneyRepository: MoneyRepository
 
     // LiveData gives us updated words when they change.
-    val allTransactions: LiveData<List<MoneyModel>>
+    lateinit var allTransactions: LiveData<List<MoneyModel>>
+
     val dailyExpenses: LiveData<List<DailyExpenseModel>>
     val bookDao: MyPassBookDao = MyPassBookDatabase.getDatabase(application).myPassBookDao()
 
     init {
         moneyRepository = MoneyRepository(bookDao, application.applicationContext)
-        allTransactions = moneyRepository.getAllData()
         dailyExpenses = moneyRepository.getAllDailyExpenses()
     }
 
@@ -33,7 +32,8 @@ public class PassBookViewModel(application: Application) : AndroidViewModel(appl
     }
 
     fun getTransactionsByMonth(dateQuery: String): LiveData<List<MoneyModel>> {
-        return moneyRepository.getTransactionsByMonth(dateQuery)
+        allTransactions = moneyRepository.getTransactionsByMonth(dateQuery)
+        return allTransactions
     }
 
     fun insertDailyExpense(moneyModel: DailyExpenseModel) {
@@ -60,6 +60,10 @@ public class PassBookViewModel(application: Application) : AndroidViewModel(appl
 
     fun getFirstTransaction(): MoneyModel {
         return moneyRepository.getFirstTransaction()
+    }
+
+    fun getLastTransaction(): MoneyModel {
+        return moneyRepository.getLastTransaction()
     }
 
     fun getTransactionCount(str: String): Long {

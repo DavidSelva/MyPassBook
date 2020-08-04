@@ -35,6 +35,9 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:theme="@style/BaseTheme.AppTheme" />
+        <activity
+            android:name=".ui.passbook.pdfviewer.PdfViewActivity"
+            android:theme="@style/BaseTheme.AppTheme" />
     </application>
 
 </manifest>
