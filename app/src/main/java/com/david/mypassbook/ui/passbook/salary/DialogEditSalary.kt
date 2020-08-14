@@ -75,7 +75,7 @@ class DialogEditSalary : DialogFragment() {
         }
         binding.btnSave.setOnClickListener(View.OnClickListener {
             if (mFrom == Constants.TAG_EDIT) {
-                if (TextUtils.isEmpty(binding.edtAmount.text)) {
+                if (TextUtils.isEmpty(binding.edtAmount.text.toString())) {
                     AppUtils.getInstance(mContext).makeToast(getString(R.string.enter_amount))
                 } else {
                     val currentMonth: String = DateUtils.getCurrentMonth()
@@ -85,33 +85,38 @@ class DialogEditSalary : DialogFragment() {
                     )
 
                     Executors.newSingleThreadExecutor().execute(Runnable {
-                        dailyViewModel.insertSalary(salaryModel)
+                        dailyViewModel.editSalary(salaryModel)
                         dismissAllowingStateLoss()
                     })
                 }
             } else {
-                val credit: Double = binding.edtAmount.text.toString().toDouble()
-                val dateTime = DateUtils.getCurrentDateTime()
-                val date = DateUtils.getCurrentDate()
-                val month = DateUtils.getCurrentMonth()
-                val year = DateUtils.getCurrentYear()
-                val time = DateUtils.getCurrentTime()
-                val particulars = binding.edtParticulars.text.toString()
-                val total: Double = credit
-                val moneyModel = MoneyModel()
-                moneyModel.setDateTime(dateTime)
-                moneyModel.setDate(date)
-                moneyModel.setMonth(month)
-                moneyModel.setYear(year)
-                moneyModel.setTime(time)
-                moneyModel.setParticular(particulars)
-                moneyModel.credit = credit
-                moneyModel.debit = 0.0
-                moneyModel.total = total
-                Executors.newSingleThreadExecutor().execute(Runnable {
-                    dailyViewModel.insertTransaction(moneyModel)
-                    dismissAllowingStateLoss()
-                })
+                if (!TextUtils.isEmpty(binding.edtAmount.text.toString())) {
+                    val credit: Double = binding.edtAmount.text.toString().toDouble()
+                    val dateTime = DateUtils.getCurrentDateTime()
+                    val date = DateUtils.getCurrentDate()
+                    val month = DateUtils.getCurrentMonth()
+                    val year = DateUtils.getCurrentYear()
+                    val time = DateUtils.getCurrentTime()
+                    val particulars = binding.edtParticulars.text.toString()
+                    val total: Double = credit
+                    val moneyModel = MoneyModel()
+                    moneyModel.setDateTime(dateTime)
+                    moneyModel.setDate(date)
+                    moneyModel.setMonth(month)
+                    moneyModel.setYear(year)
+                    moneyModel.setTime(time)
+                    moneyModel.setParticular(particulars)
+                    moneyModel.credit = credit
+                    moneyModel.debit = 0.0
+                    moneyModel.total = total
+                    Executors.newSingleThreadExecutor().execute(Runnable {
+                        dailyViewModel.insertTransaction(moneyModel)
+                        dismissAllowingStateLoss()
+                    })
+                } else {
+                    AppUtils.getInstance(mContext)
+                        .makeToast(getString(R.string.edit_salary_description))
+                }
             }
         })
     }

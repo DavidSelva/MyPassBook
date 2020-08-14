@@ -28,7 +28,8 @@ class LoginActivity : BaseActivity() {
         if (PrefUtils.readBoolean(PrefUtils.KEY_IS_LOGGED)) {
             loginBinding.edtConfirmPin.visibility = View.GONE
             loginBinding.edtPin.text =
-                Editable.Factory.getInstance().newEditable(PrefUtils.readString(PrefUtils.KEY_PIN))
+                Editable.Factory.getInstance()
+                    .newEditable(PrefUtils.readInt(PrefUtils.KEY_PIN).toString())
         }
 
         loginBinding.btnLogin.setOnClickListener(View.OnClickListener {
@@ -38,9 +39,10 @@ class LoginActivity : BaseActivity() {
                         AppUtils.getInstance(mContext)
                             .makeToast(getString(R.string.enter_pin_number));
                     }
-                    loginBinding.edtPin.toString() != PrefUtils.readString(PrefUtils.KEY_PIN) -> {
+                    loginBinding.edtPin.toString()
+                        .toInt() != PrefUtils.readInt(PrefUtils.KEY_PIN) -> {
                         AppUtils.getInstance(mContext)
-                            ?.makeToast(getString(R.string.invalid_pin_number))
+                            .makeToast(getString(R.string.invalid_pin_number))
                     }
                     else -> {
                         finish()
@@ -51,21 +53,21 @@ class LoginActivity : BaseActivity() {
                 when {
                     TextUtils.isEmpty(loginBinding.edtPin.text) -> {
                         AppUtils.getInstance(mContext)
-                            ?.makeToast(getString(R.string.enter_pin_number));
+                            .makeToast(getString(R.string.enter_pin_number));
                     }
                     TextUtils.isEmpty(loginBinding.edtConfirmPin.text) -> {
                         AppUtils.getInstance(mContext)
-                            ?.makeToast(getString(R.string.enter_confirm_pin_number));
+                            .makeToast(getString(R.string.enter_confirm_pin_number));
                     }
                     loginBinding.edtPin.text.toString().toInt()
                             != (loginBinding.edtConfirmPin.text.toString().toInt()) -> {
                         AppUtils.getInstance(mContext)
-                            ?.makeToast(getString(R.string.confirm_pin_mismatched));
+                            .makeToast(getString(R.string.confirm_pin_mismatched));
                     }
                     else -> {
-                        PrefUtils.writeString(
+                        PrefUtils.writeInt(
                             PrefUtils.KEY_PIN,
-                            loginBinding.edtPin.text.toString()
+                            loginBinding.edtPin.text.toString().toInt()
                         )
                         PrefUtils.writeBoolean(PrefUtils.KEY_IS_LOGGED, true);
                         startActivity(Intent(applicationContext, MainActivity::class.java))

@@ -30,6 +30,14 @@ class PrefUtils {
             return pref?.getString(key, "")
         }
 
+        fun writeInt(key: String, value: Int) {
+            pref?.edit()?.putInt(key, value)?.apply()
+        }
+
+        fun readInt(key: String): Int? {
+            return pref?.getInt(key, 0)
+        }
+
         fun writeBoolean(key: String?, value: Boolean) {
             val editor = pref!!.edit()
             editor.putBoolean(key, value).apply()

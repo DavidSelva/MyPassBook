@@ -1,11 +1,10 @@
 package com.david.mypassbook.ui.passbook
 
 import android.app.Application
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import com.david.mypassbook.db.*
 import com.david.mypassbook.repository.MoneyRepository
-import kotlinx.coroutines.launch
 
 
 public class PassBookViewModel(application: Application) : AndroidViewModel(application) {
@@ -37,13 +36,15 @@ public class PassBookViewModel(application: Application) : AndroidViewModel(appl
     }
 
     fun insertDailyExpense(moneyModel: DailyExpenseModel) {
-        viewModelScope.launch {
-            moneyRepository.insertDailyExpense(moneyModel)
-        }
+        moneyRepository.insertDailyExpense(moneyModel)
     }
 
     fun getAllDailyExpenses(): LiveData<List<DailyExpenseModel>> {
         return moneyRepository.getAllDailyExpenses()
+    }
+
+    fun deleteDailyExpense(_id: Long?) {
+        moneyRepository.deleteDailyExpense(_id)
     }
 
     fun getTotalByMonth(currentMonth: String): MoneyModel {
@@ -54,8 +55,8 @@ public class PassBookViewModel(application: Application) : AndroidViewModel(appl
         return moneyRepository.getCurrentSalary()
     }
 
-    fun insertSalary(salaryModel: SalaryModel) {
-        moneyRepository.insertSalary(salaryModel)
+    fun editSalary(salaryModel: SalaryModel) {
+        moneyRepository.editSalary(salaryModel)
     }
 
     fun getFirstTransaction(): MoneyModel {

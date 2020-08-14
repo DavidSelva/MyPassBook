@@ -3,6 +3,7 @@ package com.david.mypassbook.utils
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.os.Build.VERSION
 import android.os.Environment
 import android.provider.MediaStore
@@ -49,7 +50,7 @@ class StorageUtils {
             from: String,
             fileName: String
         ) {
-            if (VERSION.SDK_INT > 28) {
+            if (VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val relativeLocation: String = Environment.DIRECTORY_DOCUMENTS
                 val contentValues = ContentValues()
                 contentValues.put("_display_name", fileName)

@@ -29,7 +29,7 @@
             android:orientation="vertical">
 
             <com.pdfview.PDFView
-                android:id="@+id/pdf_view"
+                android:id="@+id/pdfView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:barrierAllowsGoneWidgets="true" />

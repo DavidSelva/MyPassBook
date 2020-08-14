@@ -24,7 +24,6 @@ import kotlin.jvm.internal.Intrinsics
 class DialogDailyExpense : DialogFragment() {
     val TAG = DialogDailyExpense::javaClass.name
     lateinit var binding: DialogDailyExpenseBinding
-    private val dailyExpenseModel: DailyExpenseModel? = null
     lateinit var dailyViewModel: PassBookViewModel
     lateinit var expenseAdapter: EditExpenseAdapter
     private val expenseList: List<DailyExpenseModel> = ArrayList()
@@ -83,6 +82,7 @@ class DialogDailyExpense : DialogFragment() {
                             dailyExpenseModel.setExpenseName(binding.edtExpense.text.toString())
                             dailyExpenseModel.setCost(binding.edtCost.text.toString().toDouble())
                             dailyViewModel.insertDailyExpense(dailyExpenseModel)
+                            dismissAllowingStateLoss()
                         }
                     )
                 }
@@ -91,9 +91,25 @@ class DialogDailyExpense : DialogFragment() {
                     if (activity is MainActivity) {
                         val tempActivity: MainActivity = activity as MainActivity;
                         tempActivity.onDailyExpenseAdded(expenseAdapter.getCheckedData())
+                        dismissAllowingStateLoss()
                     }
+                } else {
+                    AppUtils.getInstance(mContext)
+                        .makeToast(mContext.getString(R.string.select_any_one))
                 }
-                dismissAllowingStateLoss()
+            }
+        })
+
+        binding.btnDelete.setOnClickListener(View.OnClickListener {
+            if (expenseAdapter.getCheckedData().isNotEmpty()) {
+                if (activity is MainActivity) {
+                    val tempActivity: MainActivity = activity as MainActivity;
+                    tempActivity.onDailyExpenseDeleted(expenseAdapter.getCheckedData())
+                    dismissAllowingStateLoss()
+                }
+            } else {
+                AppUtils.getInstance(mContext)
+                    .makeToast(mContext.getString(R.string.select_any_one))
             }
         })
     }
@@ -101,6 +117,7 @@ class DialogDailyExpense : DialogFragment() {
     private fun setAdapter() {
         expenseAdapter = EditExpenseAdapter(mContext, expenseList)
         binding.recyclerView.layoutManager = LinearLayoutManager(mContext)
+        binding.recyclerView.adapter = expenseAdapter
         expenseAdapter.notifyDataSetChanged()
     }
 

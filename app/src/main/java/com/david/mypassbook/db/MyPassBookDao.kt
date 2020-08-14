@@ -15,11 +15,14 @@ interface MyPassBookDao {
     @Query("SELECT * from MONEY_TABLE WHERE month = :month ORDER BY _id ASC")
     fun getTransactionsByMonth(month: String): LiveData<List<MoneyModel>>
 
-    @Query("SELECT * from SALARY_TABLE ORDER BY month DESC LIMIT 1")
-    fun getCurrentSalary(): SalaryModel
-
     @Query("SELECT * FROM DAILY_EXPENSE_TABLE")
     fun getDailyExpenses(): LiveData<List<DailyExpenseModel>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertDailyExpense(dailyExpenseModel: DailyExpenseModel)
+
+    @Query("DELETE FROM DAILY_EXPENSE_TABLE WHERE _id = :expenseId")
+    fun deleteDailyExpense(expenseId: Long?)
 
     @Query("SELECT COUNT(*) FROM MONEY_TABLE WHERE month = :str")
     fun getTransactionCount(str: String): Long
@@ -34,14 +37,11 @@ interface MyPassBookDao {
     fun getLastTransaction(): MoneyModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertDailyExpense(dailyExpenseModel: DailyExpenseModel)
+    fun insertTransaction(moneyModel: MoneyModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTransaction(moneyModel: MoneyModel?)
+    fun editSalary(salaryModel: SalaryModel)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSalary(salaryModel: SalaryModel?)
-
-    @Query("DELETE FROM DAILY_EXPENSE_TABLE WHERE _id = :l")
-    fun deleteDailyExpense(l: Long?)
+    @Query("SELECT * from SALARY_TABLE ORDER BY month DESC LIMIT 1")
+    fun getCurrentSalary(): SalaryModel
 }

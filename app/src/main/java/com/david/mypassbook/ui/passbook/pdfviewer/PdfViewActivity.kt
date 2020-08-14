@@ -10,6 +10,7 @@ import com.david.mypassbook.ui.BaseActivity
 import com.david.mypassbook.utils.AppUtils
 import com.david.mypassbook.utils.Constants
 import com.david.mypassbook.utils.StorageUtils
+import java.io.File
 import kotlin.jvm.internal.Intrinsics
 
 
@@ -29,6 +30,7 @@ class PdfViewActivity : BaseActivity() {
         setSupportActionBar(binding.toolbar);
         filePath = intent.getStringExtra(Constants.TAG_FILE_PATH)
         month = intent.getStringExtra(Constants.TAG_MONTH)
+        binding.pdfView.fromFile(File(filePath)).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

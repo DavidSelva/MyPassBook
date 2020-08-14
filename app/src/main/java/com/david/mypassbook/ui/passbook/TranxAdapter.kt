@@ -48,17 +48,17 @@ class TranxAdapter internal constructor(context: Context, dailyList: List<MoneyM
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HeaderViewHolder) {
-            val item = dailyList!![position]
+            val item = dailyList[position]
             holder.txtSerialNo.text = item.get_id().toString()
-            holder.txtDate.text = item.getDate()
+            holder.txtDate.text = item.getDateTime()
             holder.txtParticulars.text = item.getParticular()
             holder.txtCredit.text = item.credit.toString()
             holder.txtDebit.text = item.debit.toString()
             holder.txtTotal.text = item.total.toString()
         } else if (holder is ItemViewHolder) {
-            val item = dailyList!![position]
+            val item = dailyList[position]
             holder.txtSerialNo.text = item.get_id().toString()
-            holder.txtDate.text = item.getDate()
+            holder.txtDate.text = item.getDateTime()
             holder.txtParticulars.text = item.getParticular()
             holder.txtCredit.text = item.credit.toString()
             holder.txtDebit.text = item.debit.toString()

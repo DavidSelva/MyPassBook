@@ -33,6 +33,10 @@ class MoneyRepository(private val passBookDao: MyPassBookDao, private val mConte
         return passBookDao.getDailyExpenses()
     }
 
+    fun deleteDailyExpense(_id:Long?) {
+        return passBookDao.deleteDailyExpense(_id)
+    }
+
     fun getFirstTransaction(): MoneyModel {
         return passBookDao.getFirstTransaction()
     }
@@ -49,8 +53,8 @@ class MoneyRepository(private val passBookDao: MyPassBookDao, private val mConte
         return passBookDao.getCurrentSalary()
     }
 
-    fun insertSalary(salaryModel: SalaryModel) {
-        passBookDao.insertSalary(salaryModel)
+    fun editSalary(salaryModel: SalaryModel) {
+        passBookDao.editSalary(salaryModel)
     }
 
     fun getTransactionCount(str: String): Long {

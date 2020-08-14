@@ -99,7 +99,7 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
         })
     }
 
-    fun getTransactionsByMonth(month: String) {
+    private fun getTransactionsByMonth(month: String) {
         passbookViewModel.getTransactionsByMonth(month)
             .observe(this, androidx.lifecycle.Observer { dailyList ->
                 if (dailyList != null) {
@@ -213,7 +213,7 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
                 fragmentTransaction.addToBackStack(null)
                 val dialogEditSalary = DialogEditSalary()
                 dialogEditSalary.setContext(this)
-                dialogEditSalary.setFrom(Constants.TAG_ADD)
+                dialogEditSalary.setFrom(Constants.TAG_EDIT)
                 dialogEditSalary.show(supportFragmentManager, this.TAG)
                 return true
             }
@@ -274,14 +274,19 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
 
     fun onDailyExpenseAdded(expenseList: List<DailyExpenseModel>) {
         for (dailyExpenseModel in expenseList) {
+            Executors.newSingleThreadExecutor().execute(
+                Runnable {
+                    AppUtils.getInstance(mContext)
+                        .makeToast(getString(R.string.insufficient_funds_to_debit))
+                }
+            )
             val value: MoneyModel = passbookViewModel.getLastTransaction()
             if (value == null) {
-                Executors.newSingleThreadExecutor().execute(
-                    Runnable {
+                runOnUiThread(Runnable {
+
+                })
                         AppUtils.getInstance(mContext)
                             .makeToast(getString(R.string.insufficient_funds_to_debit))
-                    }
-                )
                 break
             } else if (value.total <= 0) {
                 AppUtils.getInstance(mContext)
@@ -311,6 +316,16 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
                         passbookViewModel.insertTransaction(moneyModel)
                     })
             }
+        }
+    }
+
+    fun onDailyExpenseDeleted(expenseList: List<DailyExpenseModel>) {
+        for (dailyExpenseModel in expenseList) {
+            Executors.newSingleThreadExecutor().execute(
+                Runnable {
+                    passbookViewModel.deleteDailyExpense(dailyExpenseModel.get_id())
+                }
+            )
         }
     }
 
