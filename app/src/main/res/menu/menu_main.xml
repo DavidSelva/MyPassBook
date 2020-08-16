@@ -1,10 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt">
-    <item android:id="@+id/btnDailyExpense" android:title="@string/edit_daily_expense" app:showAsAction="never"/>
-    <item android:id="@+id/btnEditSalary" android:title="@string/edit_salary" app:showAsAction="never"/>
-    <item android:id="@+id/btnAddSalary" android:title="@string/add_salary" app:showAsAction="never"/>
-    <item android:id="@+id/btnClear" android:title="@string/clear_db" app:showAsAction="never"/>
-    <item android:icon="@drawable/ic_calendar" android:id="@+id/btnCalendar" android:title="@string/calendar" app:showAsAction="always"/>
-    <item android:icon="@drawable/ic_print" android:id="@+id/btnPrint" android:title="@string/print" app:showAsAction="never"/>
-    <item android:icon="@drawable/ic_daily" android:id="@+id/btnAddDailyExpense" android:title="@string/daily_expense" app:showAsAction="always"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/btnDailyExpense"
+        android:actionLayout="@layout/layout_menu"
+        android:title="@string/edit_daily_expense"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/btnEditSalary"
+        android:actionLayout="@layout/layout_menu"
+        android:title="@string/edit_salary"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/btnAddSalary"
+        android:actionLayout="@layout/layout_menu"
+        android:title="@string/add_salary"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/btnClear"
+        android:actionLayout="@layout/layout_menu"
+        android:title="@string/clear_db"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/btnCalendar"
+        android:actionLayout="@layout/layout_menu"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/calendar"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/btnPrint"
+        android:actionLayout="@layout/layout_menu"
+        android:icon="@drawable/ic_print"
+        android:title="@string/print"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/btnAddDailyExpense"
+        android:actionLayout="@layout/layout_menu"
+        android:icon="@drawable/ic_daily"
+        android:title="@string/daily_expense"
+        app:showAsAction="always" />
 </menu>

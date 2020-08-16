@@ -22,7 +22,9 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".ui.SplashActivity">
+        <activity
+            android:name=".ui.SplashActivity"
+            android:theme="@style/BaseTheme.AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,6 +40,10 @@
         <activity
             android:name=".ui.passbook.pdfviewer.PdfViewActivity"
             android:theme="@style/BaseTheme.AppTheme" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

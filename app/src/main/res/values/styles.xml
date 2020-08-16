@@ -4,38 +4,48 @@
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 
     <style name="BaseTheme.AppTheme">
-        <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:textColorSecondary">@color/colorWhite</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ToolbarTextAppearance">
+        <item name="android:fontFamily">@font/lusitana_family</item>
+        <item name="font">@font/lusitana</item>
+        <item name="android:textSize">@dimen/text_header</item>
     </style>
 
     <style name="BaseTheme.PrimaryEditTextNormal">
         <item name="android:textColor">@color/textPrimary</item>
         <item name="android:textColorHint">@color/textSecondary</item>
         <item name="backgroundTint">@color/colorWhite</item>
-        <item name="fontFamily">@font/david_libre</item>
+        <item name="fontFamily">@font/lusitana_family</item>
+        <item name="font">@font/lusitana</item>
     </style>
 
     <style name="PrimaryButtonNormal">
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textColorHint">@color/colorWhite</item>
         <item name="backgroundTint">@color/buttonPrimary</item>
-        <item name="fontFamily">@font/david_libre</item>
+        <item name="fontFamily">@font/lusitana_family</item>
+        <item name="font">@font/lusitana</item>
     </style>
 
     <style name="PrimaryText">
-        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:textSize">@dimen/text_small</item>
         <item name="android:textColor">@color/textPrimary</item>
         <item name="android:textColorHint">@color/textSecondary</item>
-        <item name="fontFamily">@font/david_libre</item>
+        <item name="fontFamily">@font/lusitana_family</item>
+        <item name="font">@font/lusitana</item>
     </style>
 
     <style name="HeaderText">
-        <item name="android:textSize">@dimen/text_header</item>
+        <item name="android:textSize">@dimen/text_large</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textColorHint">@color/colorWhite</item>
-        <item name="fontFamily">@font/david_libre</item>
+        <item name="fontFamily">@font/lusitana_family</item>
+        <item name="font">@font/lusitana</item>
     </style>
 
 </resources>

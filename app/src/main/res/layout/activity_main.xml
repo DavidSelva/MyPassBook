@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@mipmap/ic_launcher"
         app:title="@string/app_name"
+        app:titleTextAppearance="@style/ToolbarTextAppearance"
         app:titleTextColor="@color/colorWhite" />
 
     <androidx.recyclerview.widget.RecyclerView

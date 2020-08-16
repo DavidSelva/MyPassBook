@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:hint="@string/enter_pin">
+            android:hint="@string/enter_pin"
+            android:textColorHint="@color/colorWhite">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtPin"
@@ -30,14 +31,16 @@
                 android:imeOptions="actionNext"
                 android:inputType="numberPassword"
                 android:maxLength="4"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textColor="@color/colorWhite" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:hint="@string/confirm_pin">
+            android:hint="@string/confirm_pin"
+            android:textColorHint="@color/colorWhite">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtConfirmPin"
@@ -47,7 +50,8 @@
                 android:imeOptions="actionDone"
                 android:inputType="numberPassword"
                 android:maxLength="4"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textColor="@color/colorWhite" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -58,7 +62,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="@string/login"
-            android:textStyle="bold"
             android:theme="@style/Widget.MaterialComponents.Button" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,10 +10,13 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
 import android.util.DisplayMetrics
 import android.util.LruCache
 import android.view.Menu
 import android.view.MenuItem
+import android.view.SubMenu
 import android.view.View
 import android.view.View.MeasureSpec
 import android.widget.DatePicker
@@ -69,9 +72,10 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
         super.onCreate(savedInstanceState)
         val inflate: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         mainBinding = inflate;
+        mContext = this
         setContentView(inflate.root)
         setSupportActionBar(mainBinding.toolbar)
-        mContext = this
+
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         displayWidth = displayMetrics.widthPixels
@@ -184,7 +188,32 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+      /*  for (i in 0 until menu.size()) {
+            val mi = menu.getItem(i)
+            //for aapplying a font to subMenu ...
+            val subMenu: SubMenu? = mi.subMenu
+            if (subMenu != null && subMenu.size() > 0) {
+                for (j in 0 until subMenu.size()) {
+                    val subMenuItem: MenuItem = subMenu.getItem(j)
+                    applyFontToMenuItem(subMenuItem)
+                }
+            }
+            //the method we have create in activity
+            applyFontToMenuItem(mi)
+        }*/
         return true
+    }
+
+    private fun applyFontToMenuItem(mi: MenuItem) {
+
+        val mNewTitle = SpannableString(mi.title)
+        mNewTitle.setSpan(
+            AppUtils.getInstance(mContext).getAppTypeFace(),
+            0,
+            mNewTitle.length,
+            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+        )
+        mi.title = mNewTitle
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
