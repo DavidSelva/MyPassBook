@@ -42,6 +42,6 @@ interface MyPassBookDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun editSalary(salaryModel: SalaryModel)
 
-    @Query("SELECT * from SALARY_TABLE ORDER BY month DESC LIMIT 1")
+    @Query("SELECT * from SALARY_TABLE ORDER BY id DESC LIMIT 1")
     fun getCurrentSalary(): SalaryModel
 }

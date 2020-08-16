@@ -98,29 +98,73 @@ class DialogAddMoney : DialogFragment() {
                                 AppUtils.getInstance(mContext)
                                     .makeToast(getString(R.string.insufficient_funds_to_debit))
                             })
-                        }
-                    } else {
-                        val moneyModel = MoneyModel()
-                        moneyModel.setParticular(particulars)
-                        moneyModel.credit = credit
-                        moneyModel.debit = debit
-                        if (isCredit) {
-                            total += credit
                         } else {
-                            total -= debit
+                            val moneyModel = getModel(
+                                particulars,
+                                credit,
+                                debit,
+                                isCredit,
+                                lastData.total,
+                                dateTime,
+                                date,
+                                time,
+                                month,
+                                year
+                            )
+                            callback.onMoneyAdd(moneyModel)
+                            dismissAllowingStateLoss()
                         }
-                        moneyModel.total = total
-                        moneyModel.setDateTime(dateTime)
-                        moneyModel.setDate(date)
-                        moneyModel.setMonth(month)
-                        moneyModel.setYear(year)
-                        moneyModel.setTime(time)
+
+                    } else {
+                        val moneyModel = getModel(
+                            particulars,
+                            credit,
+                            debit,
+                            isCredit,
+                            if (lastData != null) lastData.total else 0.0,
+                            dateTime,
+                            date,
+                            time,
+                            month,
+                            year
+                        )
                         callback.onMoneyAdd(moneyModel)
                         dismissAllowingStateLoss()
                     }
                 })
             }
         })
+    }
+
+    private fun getModel(
+        particulars: String,
+        credit: Double,
+        debit: Double,
+        isCredit: Boolean,
+        total: Double,
+        dateTime: String,
+        date: String,
+        time: String,
+        month: String,
+        year: String
+    ): MoneyModel {
+        var tempTotal = total
+        val moneyModel = MoneyModel()
+        moneyModel.setParticular(particulars)
+        moneyModel.credit = credit
+        moneyModel.debit = debit
+        if (isCredit) {
+            tempTotal += credit
+        } else {
+            tempTotal -= debit
+        }
+        moneyModel.total = tempTotal
+        moneyModel.setDateTime(dateTime)
+        moneyModel.setDate(date)
+        moneyModel.setMonth(month)
+        moneyModel.setYear(year)
+        moneyModel.setTime(time)
+        return moneyModel
     }
 
     override fun onAttach(context: Context) {

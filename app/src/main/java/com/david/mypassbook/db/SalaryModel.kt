@@ -1,13 +1,14 @@
 package com.david.mypassbook.db
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "Salary_Table")
-class SalaryModel(month: String, salary: Double) {
+class SalaryModel(
+    @ColumnInfo(name = "month") val month: Int,
+    @ColumnInfo(name = "salary") val salary: Double
+) {
     @PrimaryKey(autoGenerate = true)
-    var _id: Long = 0
-    var month = month
-    var salary = salary
-
+    var id: Long? = null
 }

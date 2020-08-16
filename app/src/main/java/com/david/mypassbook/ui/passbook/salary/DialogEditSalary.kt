@@ -18,6 +18,8 @@ import com.david.mypassbook.ui.passbook.PassBookViewModel
 import com.david.mypassbook.utils.AppUtils
 import com.david.mypassbook.utils.Constants
 import com.david.mypassbook.utils.DateUtils
+import com.google.gson.Gson
+import timber.log.Timber
 import java.util.concurrent.Executors
 import kotlin.jvm.internal.Intrinsics
 
@@ -80,10 +82,9 @@ class DialogEditSalary : DialogFragment() {
                 } else {
                     val currentMonth: String = DateUtils.getCurrentMonth()
                     val salaryModel = SalaryModel(
-                        currentMonth,
+                        currentMonth.toInt(),
                         binding.edtAmount.text.toString().toDouble()
                     )
-
                     Executors.newSingleThreadExecutor().execute(Runnable {
                         dailyViewModel.editSalary(salaryModel)
                         dismissAllowingStateLoss()

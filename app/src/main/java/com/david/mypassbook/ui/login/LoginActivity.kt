@@ -39,7 +39,7 @@ class LoginActivity : BaseActivity() {
                         AppUtils.getInstance(mContext)
                             .makeToast(getString(R.string.enter_pin_number));
                     }
-                    loginBinding.edtPin.toString()
+                    loginBinding.edtPin.text.toString()
                         .toInt() != PrefUtils.readInt(PrefUtils.KEY_PIN) -> {
                         AppUtils.getInstance(mContext)
                             .makeToast(getString(R.string.invalid_pin_number))

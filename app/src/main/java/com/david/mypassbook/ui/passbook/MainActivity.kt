@@ -273,48 +273,53 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
     }
 
     fun onDailyExpenseAdded(expenseList: List<DailyExpenseModel>) {
+        var isNoFunds = false
         for (dailyExpenseModel in expenseList) {
-            Executors.newSingleThreadExecutor().execute(
-                Runnable {
-                    AppUtils.getInstance(mContext)
-                        .makeToast(getString(R.string.insufficient_funds_to_debit))
-                }
-            )
-            val value: MoneyModel = passbookViewModel.getLastTransaction()
-            if (value == null) {
-                runOnUiThread(Runnable {
-
-                })
-                        AppUtils.getInstance(mContext)
-                            .makeToast(getString(R.string.insufficient_funds_to_debit))
-                break
-            } else if (value.total <= 0) {
-                AppUtils.getInstance(mContext)
-                    .makeToast(getString(R.string.insufficient_funds_to_debit))
-                break
-            } else {
-                var total: Double
-                val debit: Double = dailyExpenseModel.getCost()
-                total = value.total - debit
-                val dateTime: String = DateUtils.getCurrentDateTime()
-                val date: String = DateUtils.getCurrentDate()
-                val month: String = DateUtils.getCurrentMonth()
-                val year: String = DateUtils.getCurrentYear()
-                val time: String = DateUtils.getCurrentTime()
-                val moneyModel = MoneyModel()
-                moneyModel.setDateTime(dateTime)
-                moneyModel.setDate(date)
-                moneyModel.setMonth(month)
-                moneyModel.setYear(year)
-                moneyModel.setTime(time)
-                moneyModel.setParticular(dailyExpenseModel.getExpenseName())
-                moneyModel.credit = 0.0
-                moneyModel.debit = debit
-                moneyModel.total = total
+            if (!isNoFunds) {
                 Executors.newSingleThreadExecutor().execute(
                     Runnable {
-                        passbookViewModel.insertTransaction(moneyModel)
-                    })
+                        val value: MoneyModel = passbookViewModel.getLastTransaction()
+                        when {
+                            value == null -> {
+                                isNoFunds = true
+                                runOnUiThread(Runnable {
+                                    AppUtils.getInstance(mContext)
+                                        .makeToast(getString(R.string.insufficient_funds_to_debit))
+                                })
+                            }
+                            value.total <= 0 -> {
+                                isNoFunds = true
+                                runOnUiThread(Runnable {
+                                    AppUtils.getInstance(mContext)
+                                        .makeToast(getString(R.string.insufficient_funds_to_debit))
+                                })
+                            }
+                            else -> {
+                                var total: Double
+                                val debit: Double = dailyExpenseModel.getCost()
+                                total = value.total - debit
+                                val dateTime: String = DateUtils.getCurrentDateTime()
+                                val date: String = DateUtils.getCurrentDate()
+                                val month: String = DateUtils.getCurrentMonth()
+                                val year: String = DateUtils.getCurrentYear()
+                                val time: String = DateUtils.getCurrentTime()
+                                val moneyModel = MoneyModel()
+                                moneyModel.setDateTime(dateTime)
+                                moneyModel.setDate(date)
+                                moneyModel.setMonth(month)
+                                moneyModel.setYear(year)
+                                moneyModel.setTime(time)
+                                moneyModel.setParticular(dailyExpenseModel.getExpenseName())
+                                moneyModel.credit = 0.0
+                                moneyModel.debit = debit
+                                moneyModel.total = total
+                                passbookViewModel.insertTransaction(moneyModel)
+                            }
+                        }
+                    }
+                )
+            } else {
+                break
             }
         }
     }
