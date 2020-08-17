@@ -6,6 +6,7 @@ import android.os.Build
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.david.mypassbook.R
+import java.text.DecimalFormat
 
 
 class AppUtils {
@@ -24,6 +25,11 @@ class AppUtils {
         fun getInstance(context: Context): AppUtils {
             createInstance(context)
             return instance
+        }
+
+        public fun formatPrice(price: Double): String {
+            val decimalFormat = DecimalFormat("0.00")
+            return decimalFormat.format(price)
         }
     }
 

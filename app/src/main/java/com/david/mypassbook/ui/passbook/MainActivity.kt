@@ -16,7 +16,6 @@ import android.util.DisplayMetrics
 import android.util.LruCache
 import android.view.Menu
 import android.view.MenuItem
-import android.view.SubMenu
 import android.view.View
 import android.view.View.MeasureSpec
 import android.widget.DatePicker
@@ -72,10 +71,10 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
         super.onCreate(savedInstanceState)
         val inflate: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         mainBinding = inflate;
-        mContext = this
-        setContentView(inflate.root)
+        setContentView(mainBinding.root)
         setSupportActionBar(mainBinding.toolbar)
 
+        mContext = this
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         displayWidth = displayMetrics.widthPixels
@@ -89,6 +88,16 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
 
 //        initDefaultCalendar()
         initMonthAndYearCalendar()
+
+        mainBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy < 0 && !mainBinding.btnAddTranx.isShown)
+                    btnAddTranx.show();
+                else if (dy > 0 && btnAddTranx.isShown)
+                    btnAddTranx.hide();
+            }
+        })
 
         mainBinding.btnAddTranx.setOnClickListener(View.OnClickListener {
             val fragmentTransaction: FragmentTransaction =
@@ -188,19 +197,19 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-      /*  for (i in 0 until menu.size()) {
-            val mi = menu.getItem(i)
-            //for aapplying a font to subMenu ...
-            val subMenu: SubMenu? = mi.subMenu
-            if (subMenu != null && subMenu.size() > 0) {
-                for (j in 0 until subMenu.size()) {
-                    val subMenuItem: MenuItem = subMenu.getItem(j)
-                    applyFontToMenuItem(subMenuItem)
-                }
-            }
-            //the method we have create in activity
-            applyFontToMenuItem(mi)
-        }*/
+        /*  for (i in 0 until menu.size()) {
+              val mi = menu.getItem(i)
+              //for aapplying a font to subMenu ...
+              val subMenu: SubMenu? = mi.subMenu
+              if (subMenu != null && subMenu.size() > 0) {
+                  for (j in 0 until subMenu.size()) {
+                      val subMenuItem: MenuItem = subMenu.getItem(j)
+                      applyFontToMenuItem(subMenuItem)
+                  }
+              }
+              //the method we have create in activity
+              applyFontToMenuItem(mi)
+          }*/
         return true
     }
 

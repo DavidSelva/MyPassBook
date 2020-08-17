@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.david.mypassbook.R
 import com.david.mypassbook.db.MoneyModel
+import com.david.mypassbook.utils.AppUtils
 
 
 class TranxAdapter internal constructor(context: Context, dailyList: List<MoneyModel>) :
@@ -52,17 +53,17 @@ class TranxAdapter internal constructor(context: Context, dailyList: List<MoneyM
             holder.txtSerialNo.text = item.get_id().toString()
             holder.txtDate.text = item.getDateTime()
             holder.txtParticulars.text = item.getParticular()
-            holder.txtCredit.text = item.credit.toString()
-            holder.txtDebit.text = item.debit.toString()
-            holder.txtTotal.text = item.total.toString()
+            holder.txtCredit.text = AppUtils.formatPrice(item.credit)
+            holder.txtDebit.text = AppUtils.formatPrice(item.debit)
+            holder.txtTotal.text = AppUtils.formatPrice(item.total)
         } else if (holder is ItemViewHolder) {
             val item = dailyList[position]
             holder.txtSerialNo.text = item.get_id().toString()
             holder.txtDate.text = item.getDateTime()
             holder.txtParticulars.text = item.getParticular()
-            holder.txtCredit.text = item.credit.toString()
-            holder.txtDebit.text = item.debit.toString()
-            holder.txtTotal.text = item.total.toString()
+            holder.txtCredit.text = AppUtils.formatPrice(item.credit)
+            holder.txtDebit.text = AppUtils.formatPrice(item.debit)
+            holder.txtTotal.text = AppUtils.formatPrice(item.total)
         }
     }
 

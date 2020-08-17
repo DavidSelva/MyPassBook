@@ -45,8 +45,8 @@ class LoginActivity : BaseActivity() {
                             .makeToast(getString(R.string.invalid_pin_number))
                     }
                     else -> {
-                        finish()
                         startActivity(Intent(mContext, MainActivity::class.java))
+                        finish()
                     }
                 }
             } else {
@@ -71,6 +71,7 @@ class LoginActivity : BaseActivity() {
                         )
                         PrefUtils.writeBoolean(PrefUtils.KEY_IS_LOGGED, true);
                         startActivity(Intent(applicationContext, MainActivity::class.java))
+                        finish()
                     }
                 }
             }
