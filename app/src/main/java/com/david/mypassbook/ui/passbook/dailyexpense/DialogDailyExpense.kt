@@ -82,7 +82,9 @@ class DialogDailyExpense : DialogFragment() {
                             dailyExpenseModel.setExpenseName(binding.edtExpense.text.toString())
                             dailyExpenseModel.setCost(binding.edtCost.text.toString().toDouble())
                             dailyViewModel.insertDailyExpense(dailyExpenseModel)
-                            dismissAllowingStateLoss()
+                            binding.edtExpense.text.clear()
+                            binding.edtCost.text.clear()
+//                            dismissAllowingStateLoss()
                         }
                     )
                 }

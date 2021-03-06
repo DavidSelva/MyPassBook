@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 class DailyExpenseModel {
     @PrimaryKey(autoGenerate = true)
     private var _id: Long? = null
-    private var cost = java.lang.Double.valueOf(0.0)
+    private var cost = 0.0
     private var expenseName = ""
     fun get_id(): Long? {
         return _id

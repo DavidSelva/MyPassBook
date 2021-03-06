@@ -40,7 +40,9 @@ import com.david.mypassbook.utils.DateUtils
 import com.david.mypassbook.utils.StorageUtils
 import com.github.dewinjm.monthyearpicker.MonthYearPickerDialog
 import com.github.dewinjm.monthyearpicker.MonthYearPickerDialogFragment
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -81,7 +83,7 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
         displayHeight = displayMetrics.heightPixels
         setAdapter()
         passbookViewModel =
-            ViewModelProvider(this@MainActivity, defaultViewModelProviderFactory).get(
+            ViewModelProvider(this@MainActivity).get(
                 PassBookViewModel::class.java
             )
         getTransactionsByMonth(DateUtils.getCurrentMonth());
@@ -115,6 +117,7 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
     private fun getTransactionsByMonth(month: String) {
         passbookViewModel.getTransactionsByMonth(month)
             .observe(this, androidx.lifecycle.Observer { dailyList ->
+                Timber.tag(TAG).d("getTransactionsByMonth: %s", Gson().toJson(dailyList))
                 if (dailyList != null) {
                     tranxAdapter.setData(dailyList)
                 }
