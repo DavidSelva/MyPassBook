@@ -115,6 +115,7 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
     }
 
     private fun getTransactionsByMonth(month: String) {
+        Timber.tag(TAG).d("getTransactionsByMonth: %s", month)
         passbookViewModel.getTransactionsByMonth(month)
             .observe(this, androidx.lifecycle.Observer { dailyList ->
                 Timber.tag(TAG).d("getTransactionsByMonth: %s", Gson().toJson(dailyList))
@@ -143,7 +144,7 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
                 val stringFormat = SimpleDateFormat(DateUtils.FORMAT_STRING_MONTH, Locale.US)
                 currentMonthString = stringFormat.format(calendar.time)
                 currentMonth = sdf.format(calendar.time)
-                passbookViewModel.getTransactionsByMonth(currentMonth)
+                getTransactionsByMonth(currentMonth)
             }
     }
 
@@ -186,7 +187,7 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
                             SimpleDateFormat(DateUtils.FORMAT_STRING_MONTH, Locale.US)
                         currentMonthString = stringFormat.format(calendar.time)
                         currentMonth = sdf.format(calendar.time)
-                        passbookViewModel.getTransactionsByMonth(currentMonth)
+                        getTransactionsByMonth(currentMonth)
                     }
                 monthYearPickerDialog.setOnDateSetListener(monthListener)
             })
