@@ -46,5 +46,16 @@ public final class DateUtils {
             return format
         }
 
+        fun getFormattedTime(timeMillis: Long): String {
+            val calendar = Calendar.getInstance(Locale.ENGLISH)
+            calendar.timeInMillis = timeMillis
+            return String.format(
+                "%s:%s:%s",
+                calendar.get(Calendar.HOUR),
+                calendar.get(Calendar.MINUTE),
+                calendar.get(Calendar.SECOND)
+            );
+        }
+
     }
 }

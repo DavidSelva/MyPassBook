@@ -11,5 +11,6 @@ class Constants {
         const val TAG_FILE_PATH = "file_path"
         const val TAG_FROM = "from"
         const val TAG_MONTH = "month"
+        const val TAG_YEAR = "year"
     }
 }

@@ -59,6 +59,7 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
     lateinit var mContext: Context
     lateinit var currentMonth: String
     lateinit var currentMonthString: String
+    lateinit var currentYearString: String
     private val dailyList: List<MoneyModel> = ArrayList()
     var dateSetListener: DatePickerDialog.OnDateSetListener? = null
     lateinit var monthYearPickerDialog: MonthYearPickerDialogFragment
@@ -86,7 +87,10 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
             ViewModelProvider(this@MainActivity).get(
                 PassBookViewModel::class.java
             )
-        getTransactionsByMonth(DateUtils.getCurrentMonth());
+        currentMonth = DateUtils.getCurrentMonth()
+        currentMonthString = DateUtils.getCurrentMonthString()
+        currentYearString = DateUtils.getCurrentYear()
+        getTransactionsByMonth(currentMonth);
 
 //        initDefaultCalendar()
         initMonthAndYearCalendar()
@@ -143,6 +147,7 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
                 val sdf = SimpleDateFormat(DateUtils.FORMAT_MONTH, Locale.US)
                 val stringFormat = SimpleDateFormat(DateUtils.FORMAT_STRING_MONTH, Locale.US)
                 currentMonthString = stringFormat.format(calendar.time)
+                currentYearString = calendar.get(Calendar.YEAR).toString()
                 currentMonth = sdf.format(calendar.time)
                 getTransactionsByMonth(currentMonth)
             }
@@ -186,6 +191,7 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
                         val stringFormat =
                             SimpleDateFormat(DateUtils.FORMAT_STRING_MONTH, Locale.US)
                         currentMonthString = stringFormat.format(calendar.time)
+                        currentYearString = calendar.get(Calendar.YEAR).toString()
                         currentMonth = sdf.format(calendar.time)
                         getTransactionsByMonth(currentMonth)
                     }
@@ -397,10 +403,10 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
 
     fun generatePDF() {
         Executors.newSingleThreadExecutor().execute(Runnable {
-            if (passbookViewModel.getTransactionCount(DateUtils.getCurrentMonth()) > 0) {
+            if (passbookViewModel.getTransactionCount(currentMonth) > 0) {
                 val document = PdfDocument()
                 val bitmap: Bitmap = getBitmapFromRecyclerView(mainBinding.recyclerView)
-                val pdfFile: File = StorageUtils.createPdfFile(DateUtils.getCurrentMonthString())
+                val pdfFile: File = StorageUtils.createPdfFile(currentMonthString)
                 try {
                     val outputStream = FileOutputStream(pdfFile)
                     // crate a page description
@@ -418,7 +424,10 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
                     val intent = Intent(mContext, PdfViewActivity::class.java)
                     intent.putExtra(Constants.TAG_FILE_PATH, pdfFile.absolutePath)
                     intent.putExtra(
-                        Constants.TAG_MONTH, DateUtils.getCurrentMonthString()
+                        Constants.TAG_MONTH, currentMonthString
+                    )
+                    intent.putExtra(
+                        Constants.TAG_YEAR, currentYearString
                     )
                     startActivity(intent)
                 } catch (e: FileNotFoundException) {

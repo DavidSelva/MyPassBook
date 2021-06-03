@@ -9,6 +9,7 @@ import com.david.mypassbook.databinding.ActivityPdfViewBinding
 import com.david.mypassbook.ui.BaseActivity
 import com.david.mypassbook.utils.AppUtils
 import com.david.mypassbook.utils.Constants
+import com.david.mypassbook.utils.DateUtils
 import com.david.mypassbook.utils.StorageUtils
 import java.io.File
 import kotlin.jvm.internal.Intrinsics
@@ -20,6 +21,7 @@ class PdfViewActivity : BaseActivity() {
     lateinit var mContext: Context
     private var filePath: String? = null
     var month: String? = null
+    var year: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +32,7 @@ class PdfViewActivity : BaseActivity() {
         setSupportActionBar(binding.toolbar);
         filePath = intent.getStringExtra(Constants.TAG_FILE_PATH)
         month = intent.getStringExtra(Constants.TAG_MONTH)
+        year = intent.getStringExtra(Constants.TAG_YEAR)
         binding.pdfView.fromFile(File(filePath)).show()
     }
 
@@ -46,7 +49,7 @@ class PdfViewActivity : BaseActivity() {
                 StorageUtils.saveFileToDocs(
                     mContext, filePath!!,
                     "application/pdf", StorageUtils.DOCUMENTS,
-                    month + "_" + System.currentTimeMillis() + ".pdf"
+                    month + " " + year + " - " + DateUtils.getFormattedTime(System.currentTimeMillis()) + ".pdf"
                 )
                 AppUtils.getInstance(mContext)
                     .makeToast(getString(R.string.pdf_success_description))
