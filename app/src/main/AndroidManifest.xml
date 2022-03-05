@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.david.mypassbook">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:name=".app.App"
@@ -24,6 +26,7 @@
 
         <activity
             android:name=".ui.SplashActivity"
+            android:exported="true"
             android:theme="@style/BaseTheme.AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,12 +36,15 @@
         </activity>
         <activity
             android:name=".ui.passbook.MainActivity"
+            android:exported="false"
             android:theme="@style/BaseTheme.AppTheme" />
         <activity
             android:name=".ui.login.LoginActivity"
+            android:exported="false"
             android:theme="@style/BaseTheme.AppTheme" />
         <activity
             android:name=".ui.passbook.pdfviewer.PdfViewActivity"
+            android:exported="false"
             android:theme="@style/BaseTheme.AppTheme" />
 
         <meta-data
