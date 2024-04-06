@@ -9,6 +9,7 @@ public final class DateUtils {
     public companion object {
         private lateinit var mContext: Context;
         const val FORMAT_MONTH = "MM";
+        const val FORMAT_YEAR = "yyyy";
         const val FORMAT_STRING_MONTH = "MMM";
 
         public fun init(context: Context) {

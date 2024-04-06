@@ -58,6 +58,7 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
     var calendar: Calendar = Calendar.getInstance()
     lateinit var mContext: Context
     lateinit var currentMonth: String
+    lateinit var currentYear: String
     lateinit var currentMonthString: String
     lateinit var currentYearString: String
     private val dailyList: List<MoneyModel> = ArrayList()
@@ -89,8 +90,8 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
             )
         currentMonth = DateUtils.getCurrentMonth()
         currentMonthString = DateUtils.getCurrentMonthString()
-        currentYearString = DateUtils.getCurrentYear()
-        getTransactionsByMonth(currentMonth);
+        currentYear = DateUtils.getCurrentYear()
+        getTransactionsByMonth(currentMonth, currentYear);
 
 //        initDefaultCalendar()
         initMonthAndYearCalendar()
@@ -118,9 +119,9 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
         })
     }
 
-    private fun getTransactionsByMonth(month: String) {
+    private fun getTransactionsByMonth(month: String, year: String) {
         Timber.tag(TAG).d("getTransactionsByMonth: %s", month)
-        passbookViewModel.getTransactionsByMonth(month)
+        passbookViewModel.getTransactionsByMonth(month, year)
             .observe(this, androidx.lifecycle.Observer { dailyList ->
                 Timber.tag(TAG).d("getTransactionsByMonth: %s", Gson().toJson(dailyList))
                 if (dailyList != null) {
@@ -145,11 +146,13 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
                 calendar.set(Calendar.MONTH, monthOfYear)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 val sdf = SimpleDateFormat(DateUtils.FORMAT_MONTH, Locale.US)
+                val yearDateFormat = SimpleDateFormat(DateUtils.FORMAT_YEAR, Locale.US)
                 val stringFormat = SimpleDateFormat(DateUtils.FORMAT_STRING_MONTH, Locale.US)
                 currentMonthString = stringFormat.format(calendar.time)
                 currentYearString = calendar.get(Calendar.YEAR).toString()
                 currentMonth = sdf.format(calendar.time)
-                getTransactionsByMonth(currentMonth)
+                currentYear = yearDateFormat.format(calendar.time)
+                getTransactionsByMonth(currentMonth, currentYear)
             }
     }
 
@@ -188,12 +191,14 @@ class MainActivity : BaseActivity(), DialogMoneyCallback {
                         calendar.set(Calendar.YEAR, year)
                         calendar.set(Calendar.MONTH, monthOfYear)
                         val sdf = SimpleDateFormat(DateUtils.FORMAT_MONTH, Locale.US)
+                        val yearDateFormat = SimpleDateFormat(DateUtils.FORMAT_YEAR, Locale.US)
                         val stringFormat =
                             SimpleDateFormat(DateUtils.FORMAT_STRING_MONTH, Locale.US)
+                        currentYear = yearDateFormat.format(calendar.time)
                         currentMonthString = stringFormat.format(calendar.time)
                         currentYearString = calendar.get(Calendar.YEAR).toString()
                         currentMonth = sdf.format(calendar.time)
-                        getTransactionsByMonth(currentMonth)
+                        getTransactionsByMonth(currentMonth, currentYear)
                     }
                 monthYearPickerDialog.setOnDateSetListener(monthListener)
             })

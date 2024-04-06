@@ -14,8 +14,8 @@ class MoneyRepository(private val passBookDao: MyPassBookDao, private val mConte
         return passBookDao.getAllData()
     }
 
-    fun getTransactionsByMonth(dateQuery: String): LiveData<List<MoneyModel>> {
-        val dataByMonth: LiveData<List<MoneyModel>> = passBookDao.getTransactionsByMonth(dateQuery)
+    fun getTransactionsByMonth(month: String, year: String): LiveData<List<MoneyModel>> {
+        val dataByMonth: LiveData<List<MoneyModel>> = passBookDao.getTransactionsByMonth(month, year)
         listLiveData = dataByMonth
         return listLiveData
     }

@@ -30,8 +30,8 @@ public class PassBookViewModel(application: Application) : AndroidViewModel(appl
         moneyRepository.insertTransaction(moneyModel)
     }
 
-    fun getTransactionsByMonth(dateQuery: String): LiveData<List<MoneyModel>> {
-        allTransactions = moneyRepository.getTransactionsByMonth(dateQuery)
+    fun getTransactionsByMonth(month: String, year: String): LiveData<List<MoneyModel>> {
+        allTransactions = moneyRepository.getTransactionsByMonth(month, year)
         return allTransactions
     }
 

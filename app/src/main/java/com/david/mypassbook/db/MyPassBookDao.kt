@@ -12,8 +12,8 @@ interface MyPassBookDao {
     @Query("SELECT * FROM MONEY_TABLE ORDER BY _id")
     fun getAllData(): LiveData<List<MoneyModel>>
 
-    @Query("SELECT * from MONEY_TABLE WHERE month = :month ORDER BY _id ASC")
-    fun getTransactionsByMonth(month: String): LiveData<List<MoneyModel>>
+    @Query("SELECT * from MONEY_TABLE WHERE month = :month AND year =:year ORDER BY _id ASC")
+    fun getTransactionsByMonth(month: String, year: String): LiveData<List<MoneyModel>>
 
     @Query("SELECT * FROM DAILY_EXPENSE_TABLE")
     fun getDailyExpenses(): LiveData<List<DailyExpenseModel>>
